@@ -8,6 +8,8 @@ import { Color_Take } from '../Components/Modal_Color_Picker';
 import { TakePosition } from '../Components/Display_on_Globe';
 import { TakeVal_FromCircularSlider } from 'react-native-circle-slider/CircleSlider';
 import { setControlText } from '../services/setcontrol'
+import Slider from '@react-native-community/slider';
+
 let TakeUserTextInput;
 const hexToRGB = (h) => {
     let r = 0, g = 0, b = 0;
@@ -30,16 +32,17 @@ const hexToRGB = (h) => {
     }
 }
 
-const handleUpload = () => {
-    setControlText(TakeUserTextInput, hexToRGB({ Color_Take }), TakeVal_FromCircularSlider, TakePosition)
+const handleUpload = (speed) => {
+    setControlText(TakeUserTextInput, hexToRGB(Color_Take), TakeVal_FromCircularSlider, TakePosition, speed)
         .then((res) => {
             if (res.status === 200) {
-                console.log(res.status);
+                alert('Set mode manual text: ' + TakeUserTextInput + ' successfully!');
             }
         })
 }
 export default function Text_config() {
     const [userInput, setUserInput] = useState("");
+    const [speed_Slider, setSpeed_Slider] = useState(300);
     const handleUserInput = (Input) => {
         setUserInput(Input);
         TakeUserTextInput = Input;
@@ -57,9 +60,24 @@ export default function Text_config() {
                     <Mondal_Color_Picker
                         Button_Style={styles.Modal_Color} />
                     <Display_on_Globe />
+                    <View>
+                        <Slider
+                            value={300}
+                            style={{ width: 300, height: 40, marginTop: 20 }}
+                            minimumValue={300}
+                            maximumValue={1000}
+                            minimumTrackTintColor={Color_Take}
+                            maximumTrackTintColor="#000000"
+                            onValueChange={(val) => setSpeed_Slider(val)}
+                            step={100}
+                        />
+                        <Text style={{ alignSelf: 'center' }}>
+                            Speed: {speed_Slider}
+                        </Text>
+                    </View>
                 </View>
                 <View style={styles.UploadView}>
-                    <TouchableOpacity style={styles.Upload_BTN} onPress={() => handleUpload()}>
+                    <TouchableOpacity style={styles.Upload_BTN} onPress={() => handleUpload(speed_Slider)}>
                         <Text style={{ fontSize: 25, color: 'white' }}>
                             UPLOAD
                         </Text>

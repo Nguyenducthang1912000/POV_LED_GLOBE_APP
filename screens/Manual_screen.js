@@ -2,8 +2,8 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import Text_config from '../screens/Text_config'
-import Display_on_Globe from '../Components/Display_on_Globe';
+import Text_config from '../screens/Text_config';
+import Image_config from '../screens/Image_config';
 export default function Manual_screen() {
     const Tab = createMaterialTopTabNavigator();
     return (
@@ -18,7 +18,7 @@ export default function Manual_screen() {
                 initialRouteName="Text"
                 lazy='true'>
                 <Tab.Screen name="Text" component={Text_config} />
-                <Tab.Screen name="Image" component={Display_on_Globe} />
+                <Tab.Screen name="Image" component={Image_config} />
                 <Tab.Screen name="Video" component={View} />
             </Tab.Navigator>
 
